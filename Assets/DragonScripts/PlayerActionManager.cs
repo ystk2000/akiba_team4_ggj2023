@@ -8,6 +8,10 @@ public class PlayerActionManager : MonoBehaviour
 
     [SerializeField] private Animator animator;
 		[SerializeField] private ParticleSystem pluckParticles;
+		[SerializeField] private AudioSource audioSourceJump;
+		[SerializeField] private AudioSource audioSourceDamage;
+		[SerializeField] private AudioSource audioSourcePull;
+		[SerializeField] private AudioSource audioSourceThrowing;
 		const float speedX = 5f;
     public const float speedJump = 16f;
     public const float pullDuration = 0.8f;
@@ -76,6 +80,7 @@ public class PlayerActionManager : MonoBehaviour
 			{
 				plantToPull = collisionArray[0].gameObject;
 				animator.SetTrigger("Pull");
+				audioSourcePull.Play();
                 pullTimer = pullDuration;
                 return;
             }
@@ -89,6 +94,7 @@ public class PlayerActionManager : MonoBehaviour
 			// �W�����v���s
 			jumping = true;
 			velocityY = speedJump;
+			audioSourceJump.Play();
 		}
 
 		Vector2 movePos = transform.position;
@@ -126,6 +132,7 @@ public class PlayerActionManager : MonoBehaviour
 		if (inputController.ThrowPressed() && holdingItem)
 		{
 			holdingItem = false;
+			audioSourceThrowing.Play();
 			animator.SetBool("IsCarrying", false);
 			animator.SetTrigger("Throw");
 			GameObject projectile = Instantiate(projectilePrefab);
