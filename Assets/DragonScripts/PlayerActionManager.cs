@@ -6,9 +6,11 @@ public class PlayerActionManager : MonoBehaviour
 {
     [SerializeField] private PlayerInputController inputController;
 
-    public float speedX = 5f;
-    public float speedJump = 16f;
-    public float pullDuration = 0.3f;
+    [SerializeField] private Animator animator;
+		[SerializeField] private ParticleSystem pluckParticles;
+		const float speedX = 5f;
+    public const float speedJump = 16f;
+    public const float pullDuration = 0.8f;
 
     private bool jumping = false;
 	
@@ -50,14 +52,16 @@ public class PlayerActionManager : MonoBehaviour
             {
                 plantToPull.SetActive(false);
                 heldItem.SetActive(true);
-                transform.localScale = Vector3.one;
+                //transform.localScale = Vector3.one;
 								holdingItem = true;
+								animator.SetBool("IsCarrying", true);
 								inputController.ClearInputs();
+								pluckParticles.Play();
 
 			}
             else
             {
-                transform.localScale = Vector3.Scale(transform.localScale, new Vector3(0.95f, 1.05f, 0.95f));
+                //transform.localScale = Vector3.Scale(transform.localScale, new Vector3(0.95f, 1.05f, 0.95f));
                 return;
             }
 
@@ -71,6 +75,7 @@ public class PlayerActionManager : MonoBehaviour
             if (plantCount > 0)
 			{
 				plantToPull = collisionArray[0].gameObject;
+				animator.SetTrigger("Pull");
                 pullTimer = pullDuration;
                 return;
             }
@@ -78,6 +83,7 @@ public class PlayerActionManager : MonoBehaviour
 
         // �ړ�����
         float moveX = inputController.HorizontalMovement;
+		animator.SetBool("IsRunning", moveX != 0);
 		if (inputController.JumpPressed() && jumping == false)
 		{
 			// �W�����v���s
@@ -110,22 +116,22 @@ public class PlayerActionManager : MonoBehaviour
 			jumping = false;
 		}
 
-		// ���f������
 		transform.position = movePos;
 
-		// �̂̌�����ύX
 		if (moveX != 0f)
 		{
-			spriteRenderer.flipX = (moveX < 0f);
+			spriteRenderer.flipX = (moveX > 0f);
 		}
 
-			if (inputController.ThrowPressed() && holdingItem)
-			{
+		if (inputController.ThrowPressed() && holdingItem)
+		{
 			holdingItem = false;
+			animator.SetBool("IsCarrying", false);
+			animator.SetTrigger("Throw");
 			GameObject projectile = Instantiate(projectilePrefab);
 			projectile.transform.position = heldItem.transform.position;
-			projectile.GetComponent<Projectile>().Init(!spriteRenderer.flipX);
+			projectile.GetComponent<Projectile>().Init();
 			heldItem.SetActive(false);
-        }
+		}
 	}
 }

@@ -4,14 +4,18 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    private float velocity;
+    private float velocityZ;
+    private float velocityY;
     private float timer;
     private const float lifetime = 3;
-    private const float speed = 1;
+    private const float speedZ = 10;
+    private const float speedY = 2f;
+    private const float gravity = 0.1f;
 
-    public void Init(bool movingRight)
+    public void Init()
     {
-        velocity = movingRight ? speed : -speed;
+        velocityZ = speedZ;
+        velocityY = speedY;
         timer = lifetime;
     }
 
@@ -24,7 +28,9 @@ public class Projectile : MonoBehaviour
             Destroy(gameObject);
         }
 
-        transform.position += Vector3.right * speed;
+        transform.position += Vector3.forward * velocityZ * dt;
+        transform.position += Vector3.up * velocityY * dt; 
+        velocityY -= gravity;
     }
 
 
