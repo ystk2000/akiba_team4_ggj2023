@@ -40,14 +40,12 @@ public class PlayerInputController : MonoBehaviour{
     public void OnMove(InputValue input)
     {
         Vector2 inputVec = input.Get<Vector2>();
-
         inputState.horizontalMovement = inputVec.x;
         inputState.ducking = inputVec.y < -0.3f;
     }
 
     public void OnJump()
     {
-        Debug.Log($"ˆÚ“®!");
         inputState.jumpPressed = true;
     }
 
@@ -60,4 +58,12 @@ public class PlayerInputController : MonoBehaviour{
     {
         inputState.throwPressed = true;
     }
+
+    public void ClearInputs() 
+    {
+        inputState.throwPressed = false;
+        inputState.pullPressed = false;
+        inputState.jumpPressed = false;
+    }
 }
+
