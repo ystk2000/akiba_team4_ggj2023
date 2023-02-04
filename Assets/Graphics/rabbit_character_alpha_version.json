@@ -126,6 +126,14 @@
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
     "duration": 100
+   },
+   "rabbit_character_alpha_version 16.aseprite": {
+    "frame": { "x": 1024, "y": 0, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 100
    }
  },
  "meta": {
@@ -133,7 +141,7 @@
   "version": "1.2.40-x64",
   "image": "rabbit_character_alpha_version.png",
   "format": "RGBA8888",
-  "size": { "w": 1024, "h": 64 },
+  "size": { "w": 1088, "h": 64 },
   "scale": "1",
   "frameTags": [
    { "name": "Idle", "from": 0, "to": 2, "direction": "forward" },
@@ -141,7 +149,8 @@
    { "name": "Run_throw", "from": 6, "to": 8, "direction": "forward" },
    { "name": "pull", "from": 9, "to": 11, "direction": "forward" },
    { "name": "trhow", "from": 12, "to": 14, "direction": "forward" },
-   { "name": "Plant", "from": 15, "to": 15, "direction": "forward" }
+   { "name": "Plant", "from": 15, "to": 15, "direction": "forward" },
+   { "name": "Idle_Throw", "from": 16, "to": 16, "direction": "forward" }
   ],
   "layers": [
    { "name": "Base", "opacity": 255, "blendMode": "normal" },

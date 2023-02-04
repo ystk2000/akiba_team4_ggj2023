@@ -452,6 +452,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: rabbit_character_alpha_version_16
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1628ecc4c3960b4a8e2b00855adfe28
+      internalID: -949900254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -470,6 +491,7 @@ TextureImporter:
       rabbit_character_alpha_version_8: -795967699
       rabbit_character_alpha_version_9: 1887816248
       rabbit_character_alpha_version_2: -758731841
+      rabbit_character_alpha_version_16: -949900254
       rabbit_character_alpha_version_1: 916342788
       rabbit_character_alpha_version_4: -343340842
       rabbit_character_alpha_version_11: 1388007700
