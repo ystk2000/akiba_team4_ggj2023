@@ -5599,7 +5599,7 @@ GameObject:
   - component: {fileID: 8998126161362808580}
   - component: {fileID: 8998126161362808699}
   m_Layer: 6
-  m_Name: Item
+  m_Name: projectile_carrot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5661,7 +5661,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2120973709, guid: 99620cce3c91b7b46bc616603a85a171, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 17716cb6d58e211478c0e49d4a1aa6d9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

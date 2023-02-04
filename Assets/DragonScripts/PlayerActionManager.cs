@@ -54,9 +54,8 @@ public class PlayerActionManager : MonoBehaviour
             pullTimer -= dt;
             if (pullTimer <= 0)
             {
-                plantToPull.SetActive(false);
+                plantToPull.GetComponent<Plant>().OnPlucked();
                 heldItem.SetActive(true);
-                //transform.localScale = Vector3.one;
 								holdingItem = true;
 								animator.SetBool("IsCarrying", true);
 								inputController.ClearInputs();
