@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class PlayerDamage : MonoBehaviour
 {
+    [SerializeField] AudioSource damageSound;
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("UŒ‚‚ğó‚¯‚Ü‚µ‚½");
+        Debug.Log("ï¿½Uï¿½ï¿½ï¿½ï¿½ï¿½ó‚¯‚Ü‚ï¿½ï¿½ï¿½");
         if (other.tag == "BossAttack")
         {
+            damageSound.Play();
             GManager.instance.ReducePlayerHP(3);
         }
     }

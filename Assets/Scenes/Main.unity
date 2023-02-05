@@ -1739,7 +1739,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 797970285}
-  m_LocalRotation: {x: 0.09853764, y: -9.890386e-10, z: 9.793392e-11, w: 0.99513334}
+  m_LocalRotation: {x: 0.09853764, y: 9.890386e-10, z: -9.793392e-11, w: 0.99513334}
   m_LocalPosition: {x: 0, y: 9.46, z: -30}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2870,24 +2870,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1274674987 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8998126160041553283, guid: 3670fae2897ce8f488a0469b16944025,
-    type: 3}
-  m_PrefabInstance: {fileID: 1322938666}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1274674992
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1274674987}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c9cbd5be2d22a542a4508bd1677e894, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1322938666
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2910,6 +2892,11 @@ PrefabInstance:
       propertyPath: spriteRenderer
       value: 
       objectReference: {fileID: 642741080}
+    - target: {fileID: 3550451443608654762, guid: 3670fae2897ce8f488a0469b16944025,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 8998126160041553280, guid: 3670fae2897ce8f488a0469b16944025,
         type: 3}
       propertyPath: m_Size.x
