@@ -16,10 +16,13 @@ public class BigBoss : MonoBehaviour
 	public static float updateElapsedTime;
 	public static int idleTime = 10;
 	public static int emotionNum = 0; // 0:普通, 1:怒り, 2:好き
-	public static bool spriteCarrotManDamageOn; // 0:普通, 1:怒り, 2:好き
+	public static bool spriteCarrotManDamageOn;
+	public static float toLoveTime;
 
 	public static GameObject spriteCarrotMan;
 	public static GameObject spriteCarrotManDamage;
+	public static GameObject spriteCarrotManLightEyes;
+	public static GameObject spriteCarrotManHeartEyes;
 
 	[SerializeField] private AudioSource audioSourceDamage;
 	
@@ -47,11 +50,15 @@ public class BigBoss : MonoBehaviour
 
 		spriteCarrotMan = GameObject.Find("Sprite-BigBoss");
 		spriteCarrotManDamage = GameObject.Find("Sprite-BigBoss-Damage");
+		spriteCarrotManLightEyes = GameObject.Find("Sprite-LightEyes");
+		spriteCarrotManHeartEyes = GameObject.Find("Sprite-HeartEyes");
 		spriteCarrotManDamage.SetActive(false);
+		spriteCarrotManLightEyes.SetActive(false);
+		spriteCarrotManHeartEyes.SetActive(false);
 
 		spriteCarrotManDamageOn = false;
 
-		
+		toLoveTime = 0;
 
 		//stateMachine.AddTransition<StateRotation, StateMoveForward>((int)Action.Move);
 		stateMachine.AddAnyTransition<StateAttackBullet>((int)Action.AttackBullet);
@@ -65,6 +72,7 @@ public class BigBoss : MonoBehaviour
 
 	private void Update()
 	{
+		toLoveTime = Time.deltaTime;
 		if(spriteCarrotManDamageOn){
 			updateElapsedTime += Time.deltaTime;
 			if(updateElapsedTime >= 0.5){
@@ -72,6 +80,14 @@ public class BigBoss : MonoBehaviour
 				spriteCarrotManDamageOn = false;
 				spriteCarrotMan.SetActive(true);
 				spriteCarrotManDamage.SetActive(false);
+			}
+		}
+		if(toLoveTime >= 40){
+			spriteCarrotManHeartEyes.SetActive(true);
+		}
+		else{
+			if(spriteCarrotManHeartEyes.activeSelf){
+				spriteCarrotManHeartEyes.SetActive(false);
 			}
 		}
 		// if (Enemy.Count == 0)
@@ -87,6 +103,7 @@ public class BigBoss : MonoBehaviour
 	{
 		if (other.gameObject.tag == "Carrot")
 		{
+			toLoveTime -= 10;
 			Destroy(other.gameObject);
 			GManager.instance.ReduceEnemyHP(2);
 			spriteCarrotMan.SetActive(false);
@@ -216,8 +233,9 @@ public class BigBoss : MonoBehaviour
 				StateMachine.Dispatch((int)Action.Move);
 				elapsedTime = 0;
 			}
-			else if(attackSet && elapsedTime >= 1){
+			else if(attackSet && elapsedTime >= 0.5){
 				attackFinish = true;
+				spriteCarrotManLightEyes.SetActive(false);
 				elapsedTime = 0;
 
 				Owner.transform.Rotate(0, 110, 0);
@@ -225,6 +243,7 @@ public class BigBoss : MonoBehaviour
 			}
 			else if(attackAreaSet && elapsedTime >= 1){
 				attackSet = true;
+				spriteCarrotManLightEyes.SetActive(true);
 				elapsedTime = 0;
 			}
 			else{
@@ -277,15 +296,17 @@ public class BigBoss : MonoBehaviour
 				StateMachine.Dispatch((int)Action.Move);
 				elapsedTime = 0;
 			}
-			else if(attackSet && elapsedTime >= 1){
+			else if(attackSet && elapsedTime >= 0.5){
 				attackFinish = true;
 				elapsedTime = 0;
+				spriteCarrotManLightEyes.SetActive(false);
 
 				Owner.transform.Rotate(0, -110, 0);
 				Instantiate(hand, placePosition, Quaternion.identity);
 			}
 			else if(attackAreaSet && elapsedTime >= 1){
 				attackSet = true;
+				spriteCarrotManLightEyes.SetActive(true);
 				elapsedTime = 0;
 			}
 			else{
@@ -326,26 +347,28 @@ public class BigBoss : MonoBehaviour
 			placePosition = target.transform.position;
 			hand = (GameObject)Resources.Load ("UpHand");
 			attackArea = (GameObject)Resources.Load ("AttackArea-HandUp");
-			Owner.transform.Rotate(45, 0, 0);
+			Owner.transform.Rotate(30, 0, 0);
 		}
 		protected override void OnUpdate()
 		{
 			elapsedTime += Time.deltaTime;
 			if(attackFinish && elapsedTime >= 0.5){
 
-				Owner.transform.Rotate(65, 0, 0);
+				Owner.transform.Rotate(50, 0, 0);
 				StateMachine.Dispatch((int)Action.Move);
 				elapsedTime = 0;
 			}
-			else if(attackSet && elapsedTime >= 1){
+			else if(attackSet && elapsedTime >= 0.5){
 				attackFinish = true;
 				elapsedTime = 0;
+				spriteCarrotManLightEyes.SetActive(false);
 
-				Owner.transform.Rotate(-110, 0, 0);
+				Owner.transform.Rotate(-80, 0, 0);
 				Instantiate(hand, placePosition, Quaternion.identity);
 			}
 			else if(attackAreaSet && elapsedTime >= 1){
 				attackSet = true;
+				spriteCarrotManLightEyes.SetActive(true);
 				elapsedTime = 0;
 			}
 			else{
