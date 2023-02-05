@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GManager : MonoBehaviour
 {
@@ -87,7 +88,7 @@ public class GManager : MonoBehaviour
 
     private void GameClear()
     {
-        clearText.text = "GameClear";
+        SceneManager.LoadScene("ClearScene");
     }
 
     private void Start()
