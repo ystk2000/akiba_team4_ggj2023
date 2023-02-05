@@ -101,13 +101,13 @@ public class BigBoss : MonoBehaviour
 		private void DecisionNormal()
 		{
 			int num = Random.Range(0, 4);
-			if(num >= 5){
+			if(num >= 3){
 				StateMachine.Dispatch((int)Action.AttackBullet);
 			}
 			else if(num >= 2){
 				StateMachine.Dispatch((int)Action.AttackHandLeft);
 			}
-			else if(num >= 0){
+			else if(num >= 1){
 				StateMachine.Dispatch((int)Action.AttackHandRight);
 			}
 			else{
@@ -270,7 +270,9 @@ public class BigBoss : MonoBehaviour
 			}	
 		}
 	}
-	// 上殴り攻撃
+	/// <summary>
+	/// 上殴り攻撃
+	/// </summary>
 	private class StateAttackHandUp : State
 	{
 		// 経過時間
@@ -278,23 +280,53 @@ public class BigBoss : MonoBehaviour
 
 		private GameObject hand;
 		private GameObject target;
+		private GameObject attackArea;
+		private Vector3 placePosition;
+		private bool attackSet;
+		private bool attackFinish;
+		private bool attackAreaSet;
 
 		protected override void OnEnter(State prevState)
 		{
-			Debug.Log("敵:上殴り攻撃だよ");
-			target = GameObject.Find("AttackPoint--3");
-        	hand = (GameObject)Resources.Load ("UpHand");
-			Vector3 placePosition = target.transform.position;
-			Instantiate(hand, placePosition, Quaternion.identity);
+			Debug.Log("敵:上から殴り攻撃だよ");
+			attackAreaSet = false;
+			attackSet = false;
+			attackFinish = false;
 			elapsedTime = 0;
+
+			target = GameObject.Find("AttackPoint--3");
+			placePosition = target.transform.position;
+			hand = (GameObject)Resources.Load ("UpHand");
+			attackArea = (GameObject)Resources.Load ("AttackArea-HandUp");
+			Owner.transform.Rotate(45, 0, 0);
 		}
 		protected override void OnUpdate()
 		{
 			elapsedTime += Time.deltaTime;
-			if(elapsedTime >= 2)
-			{
-				elapsedTime = 0;
+			if(attackFinish && elapsedTime >= 0.5){
+
+				Owner.transform.Rotate(65, 0, 0);
 				StateMachine.Dispatch((int)Action.Move);
+				elapsedTime = 0;
+			}
+			else if(attackSet && elapsedTime >= 1){
+				attackFinish = true;
+				elapsedTime = 0;
+
+				Owner.transform.Rotate(-110, 0, 0);
+				Instantiate(hand, placePosition, Quaternion.identity);
+			}
+			else if(attackAreaSet && elapsedTime >= 1){
+				attackSet = true;
+				elapsedTime = 0;
+			}
+			else{
+				if(elapsedTime >= 1)
+				{
+					attackAreaSet = true;
+					Instantiate(attackArea, placePosition, Quaternion.identity);
+					elapsedTime = 0;
+				}
 			}	
 		}
 	}
