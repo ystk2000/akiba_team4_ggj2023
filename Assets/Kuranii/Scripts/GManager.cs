@@ -83,12 +83,12 @@ public class GManager : MonoBehaviour
 
     private void GameOver()
     {
-        overText.text = "GameOver...";
+        SceneManager.LoadScene("ClearScene");
     }
 
     private void GameClear()
     {
-        SceneManager.LoadScene("ClearScene");
+        SceneManager.LoadScene("OverScene");
     }
 
     private void Start()
