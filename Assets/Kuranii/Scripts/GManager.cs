@@ -1,3 +1,4 @@
+using System.ComponentModel.Design;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,12 +9,12 @@ using UnityEngine.SceneManagement;
 public class GManager : MonoBehaviour
 {
     public static GManager instance = null;
-    [SerializeField]private int playerHP;
-    [SerializeField]private int enemyHP;
+    [SerializeField] private int playerHP;
+    [SerializeField] private int enemyHP;
     [SerializeField] private int MaxPlayerHP;
     [SerializeField] private int MaxEnemyHP;
     private int loveScore;
- 
+
     /*[SerializeField]private int reduceValue_playerHp;
     [SerializeField] private int reduceValue_enemyHp;
     [SerializeField] private int increaseValue_loveScore;*/
@@ -42,7 +43,7 @@ public class GManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-           
+
         }
         else
         {
@@ -90,8 +91,15 @@ public class GManager : MonoBehaviour
 
     public void IncreaseLoveScore(int increaseValue_loveScore)
     {
-        heartCount+= 1;
-        heartobj = Instantiate(heartPrefab, new Vector3(-12.31f + heartCount, 8.06f, 3.0f), Quaternion.identity);
+        heartCount += 1;
+
+        heartobj = Instantiate(heartPrefab,
+        new Vector3(
+            heartpare.transform.position.x - 9.2f + heartCount,
+            heartpare.transform.position.y + 6f,
+            heartpare.transform.position.z + 7.2f),
+         Quaternion.identity
+         );
         heartobj.transform.parent = heartpare.transform;
         loveScore += increaseValue_loveScore;
     }
@@ -118,26 +126,26 @@ public class GManager : MonoBehaviour
     {
         currentTime += Time.deltaTime;
 
-        //ÉQÅ[ÉÄÉIÅ[ÉoÅ[èàóù
-        if(playerHP <= 0 && (!gameClear))
+        //ÔøΩQÔøΩ[ÔøΩÔøΩÔøΩIÔøΩ[ÔøΩoÔøΩ[ÔøΩÔøΩÔøΩÔøΩ
+        if (playerHP <= 0 && (!gameClear))
         {
             gameOver = true;
             GameOver();
         }
 
-        //ÉQÅ[ÉÄÉNÉäÉAèàóù
-        if(enemyHP <= 0 &&(!gameOver))
+        //ÔøΩQÔøΩ[ÔøΩÔøΩÔøΩNÔøΩÔøΩÔøΩAÔøΩÔøΩÔøΩÔøΩ
+        if (enemyHP <= 0 && (!gameOver))
         {
             gameClear = true;
             GameClear();
         }
 
-        if(heartCount >= 4.0f)
+        if (heartCount >= 4.0f)
         {
             SceneManager.LoadScene("LoveScene");
         }
 
-        if(currentTime > loveTime)
+        if (currentTime > loveTime)
         {
             currentTime = 0f;
             IncreaseLoveScore(1);
