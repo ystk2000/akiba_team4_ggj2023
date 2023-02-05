@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 7983785830292324998}
   - component: {fileID: 7983785830292324993}
   - component: {fileID: 8220844724604352134}
+  - component: {fileID: 4594542382778741140}
   m_Layer: 0
   m_Name: Projectile
-  m_TagString: Untagged
+  m_TagString: Carrot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -97,3 +98,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91e55dc1d506c6a4c8ba8a53ca2073b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &4594542382778741140
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7983785830292324992}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.32, y: 0.32, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
