@@ -2,13 +2,13 @@
 
 public class CameraControl : MonoBehaviour
 {
-    private Actor actor;
+    private BigBoss actor;
     private Vector3 defaultPosition;
 
     void Start()
     {
         defaultPosition = transform.position;
-        actor = FindObjectOfType<Actor>();
+        actor = FindObjectOfType<BigBoss>();
     }
 
     void Update()
