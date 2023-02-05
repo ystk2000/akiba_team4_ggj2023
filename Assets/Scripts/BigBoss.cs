@@ -145,7 +145,7 @@ public class BigBoss : MonoBehaviour
 		}
 		private void DecisionNormal()
 		{
-			int num = Random.Range(0, 4);
+			int num = Random.Range(0, 5);
 			if(num >= 3){
 				StateMachine.Dispatch((int)Action.AttackBullet);
 			}
@@ -173,7 +173,7 @@ public class BigBoss : MonoBehaviour
 			Debug.Log("敵:弾幕攻撃だよ");
 
 			//弾幕の攻撃をする
-        	bullet = (GameObject)Resources.Load ("EnemyBall");
+      bullet = (GameObject)Resources.Load ("EnemyBall");
 			Vector3 placePosition = Owner.transform.position;
 			Vector3 offsetGun = new Vector3 (0,0,2);
 			Quaternion q1 = Owner.transform.rotation;
