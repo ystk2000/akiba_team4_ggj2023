@@ -26,7 +26,7 @@ public class HandSide : MonoBehaviour
     void Update()
     {
         elapsedTime += Time.deltaTime;
-        if(elapsedTime >= 10f)
+        if(elapsedTime >= 1f)
         {
             Destroy(this.gameObject);
         }   

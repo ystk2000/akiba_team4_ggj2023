@@ -26,7 +26,7 @@ public class HandVertical : MonoBehaviour
     void Update()
     {
         elapsedTime += Time.deltaTime;
-        if(elapsedTime >= 10f)
+        if(elapsedTime >= 1)
         {
             Destroy(this.gameObject);
         }   
