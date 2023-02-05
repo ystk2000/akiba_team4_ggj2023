@@ -27,6 +27,12 @@ public class GManager : MonoBehaviour
     private bool gameOver;
     [SerializeField] private Slider slider_playerHP;
     [SerializeField] private Slider slider_enemyHP;
+    [SerializeField] private float currentTime;
+    [SerializeField] private float loveTime;
+    [SerializeField] private GameObject heartPrefab;
+    [SerializeField] private int heartCount;
+    private GameObject heartobj;
+    [SerializeField] private GameObject heartpare;
 
 
     //public int score; //New!
@@ -59,6 +65,9 @@ public class GManager : MonoBehaviour
         slider_enemyHP.maxValue = MaxEnemyHP;
         slider_playerHP.value = MaxPlayerHP;
         slider_enemyHP.value = MaxEnemyHP;
+        currentTime = 0f;
+        loveTime = 10f;
+        heartCount = 0;
     }
 
     public void ReducePlayerHP(int reduceValue_playerHp)
@@ -69,12 +78,21 @@ public class GManager : MonoBehaviour
 
     public void ReduceEnemyHP(int reduceValue_enemyHp)
     {
+        if (heartCount >= 1)
+        {
+            heartCount--;
+            Destroy(heartobj);
+        }
+        currentTime = 0f;
         enemyHP -= reduceValue_enemyHp;
         slider_enemyHP.value -= reduceValue_enemyHp;
     }
 
     public void IncreaseLoveScore(int increaseValue_loveScore)
     {
+        heartCount+= 1;
+        heartobj = Instantiate(heartPrefab, new Vector3(-12.31f + heartCount, 8.06f, 3.0f), Quaternion.identity);
+        heartobj.transform.parent = heartpare.transform;
         loveScore += increaseValue_loveScore;
     }
 
@@ -98,6 +116,8 @@ public class GManager : MonoBehaviour
 
     private void Update()
     {
+        currentTime += Time.deltaTime;
+
         //ゲームオーバー処理
         if(playerHP <= 0 && (!gameClear))
         {
@@ -110,6 +130,17 @@ public class GManager : MonoBehaviour
         {
             gameClear = true;
             GameClear();
+        }
+
+        if(heartCount >= 4.0f)
+        {
+            SceneManager.LoadScene("LoveScene");
+        }
+
+        if(currentTime > loveTime)
+        {
+            currentTime = 0f;
+            IncreaseLoveScore(1);
         }
     }
 }
