@@ -36,7 +36,7 @@ public class GManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(this.gameObject);
+           
         }
         else
         {
@@ -83,7 +83,7 @@ public class GManager : MonoBehaviour
 
     private void GameOver()
     {
-        overText.text = "GameOver...";
+        SceneManager.LoadScene("OverScene");
     }
 
     private void GameClear()
