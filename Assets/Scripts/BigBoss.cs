@@ -13,8 +13,15 @@ public class BigBoss : MonoBehaviour
 	public static int attackSpeed = 20;
 	public static float angrySpeedRate = 1.5f;
 	public static float lovelySpeedRate = 0.5f;
+	public static float updateElapsedTime;
 	public static int idleTime = 10;
 	public static int emotionNum = 0; // 0:普通, 1:怒り, 2:好き
+	public static bool spriteCarrotManDamageOn; // 0:普通, 1:怒り, 2:好き
+
+	public static GameObject spriteCarrotMan;
+	public static GameObject spriteCarrotManDamage;
+
+	[SerializeField] private AudioSource audioSourceDamage;
 	
 	private enum Action : int
 	{
@@ -38,6 +45,14 @@ public class BigBoss : MonoBehaviour
 	{
 		stateMachine = new StateMachine<BigBoss>(this);
 
+		spriteCarrotMan = GameObject.Find("Sprite-BigBoss");
+		spriteCarrotManDamage = GameObject.Find("Sprite-BigBoss-Damage");
+		spriteCarrotManDamage.SetActive(false);
+
+		spriteCarrotManDamageOn = false;
+
+		
+
 		//stateMachine.AddTransition<StateRotation, StateMoveForward>((int)Action.Move);
 		stateMachine.AddAnyTransition<StateAttackBullet>((int)Action.AttackBullet);
 		stateMachine.AddAnyTransition<StateAttackHandRight>((int)Action.AttackHandRight);
@@ -50,6 +65,15 @@ public class BigBoss : MonoBehaviour
 
 	private void Update()
 	{
+		if(spriteCarrotManDamageOn){
+			updateElapsedTime += Time.deltaTime;
+			if(updateElapsedTime >= 0.5){
+				updateElapsedTime = 0;
+				spriteCarrotManDamageOn = false;
+				spriteCarrotMan.SetActive(true);
+				spriteCarrotManDamage.SetActive(false);
+			}
+		}
 		// if (Enemy.Count == 0)
 		// {
 		// 	stateMachine.Dispatch((int)Action.Move);
@@ -58,13 +82,17 @@ public class BigBoss : MonoBehaviour
 
 		stateMachine.Update();
 	}
-
-	private void OnCollisionEnter(Collision collision)
+	
+	private void OnTriggerEnter(Collider other)
 	{
-		if (collision.transform.TryGetComponent(out Enemy enemy))
+		if (other.gameObject.tag == "Carrot")
 		{
-			Destroy(enemy.gameObject);
-			stateMachine.Dispatch((int)Action.Move);
+			Destroy(other.gameObject);
+			GManager.instance.ReduceEnemyHP(2);
+			spriteCarrotMan.SetActive(false);
+			spriteCarrotManDamage.SetActive(true);
+			audioSourceDamage.Play();
+			spriteCarrotManDamageOn = true;
 		}
 	}
 	// プレイヤーを追いかける
