@@ -23,6 +23,7 @@ public class BigBoss : MonoBehaviour
 
 	[SerializeField] private AudioSource audioSourceDamage;
 	
+	[SerializeField] private AudioSource audioSourcePunchWhoosh;
 	private enum Action : int
 	{
 		// 弾丸攻撃
@@ -72,6 +73,7 @@ public class BigBoss : MonoBehaviour
 				spriteCarrotManDamageOn = false;
 				spriteCarrotMan.SetActive(true);
 				spriteCarrotManDamage.SetActive(false);
+				audioSourcePunchWhoosh.Play();
 			}
 		}
 		// if (Enemy.Count == 0)

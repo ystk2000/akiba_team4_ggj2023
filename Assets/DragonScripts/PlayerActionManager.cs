@@ -13,6 +13,7 @@ public class PlayerActionManager : MonoBehaviour
 		[SerializeField] private AudioSource audioSourceDamage;
 		[SerializeField] private AudioSource audioSourcePull;
 		[SerializeField] private AudioSource audioSourceThrowing;
+		[SerializeField] private AudioSource audioSourceWatering;
 		const float speedX = 5f;
     public const float speedJump = 16f;
     public const float pullDuration = 0.8f;
@@ -92,6 +93,7 @@ public class PlayerActionManager : MonoBehaviour
 					plant.OnWatered();
 					waterTimer = waterDuration;
 					waterParticles.Play();
+					audioSourceWatering.Play();
 					return;
 				}
 				else if(plant.FullyGrown){
