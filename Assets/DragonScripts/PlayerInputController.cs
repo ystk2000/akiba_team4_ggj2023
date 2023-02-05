@@ -10,6 +10,7 @@ public class InputState
     public bool jumpPressed;
     public bool pullPressed;
     public bool throwPressed;
+    public bool waterPressed;
 }
 
 
@@ -34,6 +35,11 @@ public class PlayerInputController : MonoBehaviour{
         inputState.pullPressed = false;
         return pressed;
     } 
+    public bool WaterPressed() { 
+        bool pressed = inputState.waterPressed;
+        inputState.waterPressed = false;
+        return pressed;
+    } 
 
     public bool Ducking => inputState.ducking;
 
@@ -55,6 +61,11 @@ public class PlayerInputController : MonoBehaviour{
     }
 
     public void OnThrow()
+    {
+        inputState.throwPressed = true;
+    }
+
+    public void OnWater()
     {
         inputState.throwPressed = true;
     }

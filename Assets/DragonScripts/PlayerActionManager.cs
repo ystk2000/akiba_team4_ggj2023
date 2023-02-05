@@ -8,6 +8,7 @@ public class PlayerActionManager : MonoBehaviour
 
     [SerializeField] private Animator animator;
 		[SerializeField] private ParticleSystem pluckParticles;
+		[SerializeField] private ParticleSystem waterParticles;
 		[SerializeField] private AudioSource audioSourceJump;
 		[SerializeField] private AudioSource audioSourceDamage;
 		[SerializeField] private AudioSource audioSourcePull;
@@ -15,12 +16,14 @@ public class PlayerActionManager : MonoBehaviour
 		const float speedX = 5f;
     public const float speedJump = 16f;
     public const float pullDuration = 0.8f;
+    public const float waterDuration = 0.8f;
 
     private bool jumping = false;
 	
 	private float velocityY = 0f;
 	private const float VELOCITY_MIN_Y = -20f;
 	public float pullTimer = 0f;
+	private float waterTimer= 0f;
 	Collider[] collisionArray = new Collider[10];
 	GameObject plantToPull = null;
 	Vector3 origin;
@@ -47,7 +50,13 @@ public class PlayerActionManager : MonoBehaviour
         }
 
 		float dt = Time.deltaTime;
+		if(waterTimer > 0){
+		waterTimer -= dt;
+		if(waterTimer <=0){
+			inputController.ClearInputs();
+		}
 
+}
         //��؂𔲂�
         if (pullTimer > 0)
         {
@@ -63,8 +72,7 @@ public class PlayerActionManager : MonoBehaviour
 
 			}
             else
-            {
-                //transform.localScale = Vector3.Scale(transform.localScale, new Vector3(0.95f, 1.05f, 0.95f));
+            {;
                 return;
             }
 
@@ -77,16 +85,28 @@ public class PlayerActionManager : MonoBehaviour
             int plantCount = Physics.OverlapBoxNonAlloc(currentPosition + Vector2.up * 0.2f, new Vector2(0.4f, 0.4f), collisionArray, Quaternion.identity, LayerMask.GetMask("Plant"));
             if (plantCount > 0)
 			{
+
+				GameObject plantToInteract = collisionArray[0].gameObject;
+				Plant plant = plantToInteract.GetComponent<Plant>();
+				if(plant.Growing && !plant.IsWatered){
+					plant.OnWatered();
+					waterTimer = waterDuration;
+					waterParticles.Play();
+					return;
+				}
+				else if(plant.FullyGrown){
 				plantToPull = collisionArray[0].gameObject;
 				animator.SetTrigger("Pull");
 				audioSourcePull.Play();
                 pullTimer = pullDuration;
                 return;
             }
-        }
+			}
+		}
+				
 
         // �ړ�����
-        float moveX = inputController.HorizontalMovement;
+			float moveX = inputController.HorizontalMovement;
 		animator.SetBool("IsRunning", moveX != 0);
 		if (inputController.JumpPressed() && jumping == false)
 		{
